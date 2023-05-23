@@ -35,7 +35,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ListMovie listDataMovie={dataMovie} fetchData={fetchData} />}/>
-            <Route path="/movie" element={<DetailsFilm />}/>
+            <Route path="/movie/:id" element={<DetailsFilm />}/>
           </Routes>
         </BrowserRouter>
             {/* <ListMovie listDataMovie={dataMovie} fetchData={fetchData} />
