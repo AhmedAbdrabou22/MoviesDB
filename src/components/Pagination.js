@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
-const Pagination = ({fetchData}) => {
-    let pageCount =500; // num of Pages in Api
-    //in react Pagination we can use the classes of bootstrab as props or customize classes from css
+import { getallMovieReudceSearchByPage} from '../redux/Actions/actionToReducer';
+import { useDispatch , useSelector } from 'react-redux';
+const Pagination = () => {
+    let dispatch = useDispatch();
+
+
+    let getPages = async (pageNum) => {
+        dispatch(getallMovieReudceSearchByPage(pageNum));
+    }
+
+    // let dataSelect = useSelector((state)=>state.pageCount)
+
+
     const handlePageClick = (data)=>{
         console.log(data.selected + 1);
-        fetchData(data.selected + 1)
+        getPages(data.selected + 1)
     }
 
     return (
@@ -16,7 +26,7 @@ const Pagination = ({fetchData}) => {
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={2}//هتعرض من500 صفحه كام في الاول   
                 marginPagesDisplayed={2}//هتعرض من500  صفحه  كام في الاخر
-                pageCount={pageCount} //num of Pages in Api
+                pageCount={500} //num of Pages in Api
                 previousLabel="السابق"
                 containerClassName={"pagination justify-content-center"}//num Of CLasses We can use It for big Div
                 pageClassName={"page-item"}

@@ -6,35 +6,20 @@ import  { useEffect, useState } from 'react';
 import DetailsFilm from './components/DetailsFilm'
 import { BrowserRouter , Routes , Route }  from 'react-router-dom';
 
+import {useDispatch, useSelector} from 'react-redux'
+
+import getallMovieReudce from "./redux/Actions/actionToReducer"
+
 function App() {
-  const [dataMovie, setDataMovie] = useState([]);
-
-  let fetchData = async (pageNum) => {
-    let resultsData = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=aa5ed79e8f6f2bf32f15742168ab68ba&language=ar&page=${pageNum}`)
-    setDataMovie(resultsData.data.results)
-  }
-
-  const searchByquery = async (query) => {
-    if (query === "") {
-      fetchData()
-    } else {
-      // setDataMovie(dataMovie)
-      let searchFilterData = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=aa5ed79e8f6f2bf32f15742168ab68ba&query=${query}&language=ar&page=1`)
-      setDataMovie(searchFilterData.data.results)
-    }
-  }
-
-  useEffect(() => { fetchData() }, [])
-
   return (
     <div className="App">
 
-      <NavBar searchByquery={searchByquery} />
+      <NavBar />
 
       <Container>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ListMovie listDataMovie={dataMovie} fetchData={fetchData} />}/>
+            <Route path="/" element={<ListMovie/>}/>
             <Route path="/movie/:id" element={<DetailsFilm />}/>
           </Routes>
         </BrowserRouter>

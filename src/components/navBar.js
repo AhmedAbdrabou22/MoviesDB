@@ -4,15 +4,27 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import {getallMovieReudce , getallMovieReudceSearch} from '../redux/Actions/actionToReducer';
+import { useDispatch } from 'react-redux';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 // import { Link } from 'react-router-dom'
 //اللينك مش هيشتغل علي navbarbrand 
 //لان النافبار مش جوا ال BrowserRouter 
 //الحل : نستخدم <a></a>
-const NavBar = ({ searchByquery }) => {
+const NavBar = () => {
     const [dataSearch, setDataSearch] = useState("")
     const searchNow = () => {
         searchByquery(dataSearch)
+    }
+
+    const dispatch = useDispatch()
+    const searchByquery = async (query) => {
+        if (query === "") {
+            dispatch(getallMovieReudce())
+        } else {
+            console.log(query);
+            dispatch(getallMovieReudceSearch(query))
+        }
     }
 
     return (
@@ -30,7 +42,7 @@ const NavBar = ({ searchByquery }) => {
                                 placeholder="ابحث عن فلمك المفضل"
                                 className="me-2"
                                 aria-label="Search"
-                                onChange={(e) =>{
+                                onChange={(e) => {
                                     setDataSearch(e.target.value)
                                     searchNow();
                                 }}
